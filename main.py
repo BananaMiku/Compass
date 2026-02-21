@@ -2,6 +2,7 @@ from local_orientation import *
 import gps
 import config
 import barfindr
+import location_calculations as lc
 
 def main():
     last_scan = None 
@@ -14,4 +15,5 @@ def main():
             last_scan = cur_location
             bars = barfindr.get_bars(cur_location, 10000)
         closest_bar = barfindr.find_closest_bar(bars, cur_location)
-        #TODO update dir given changes
+        angle = lc.get_bearing(closest_bar, cur_location)
+
