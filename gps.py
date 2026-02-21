@@ -80,3 +80,8 @@ def convert_to_decimal(value, direction):
     return decimal
 
 
+def test():
+    print(get_gps_location())
+
+if __name__ == '__main__':
+    test()
