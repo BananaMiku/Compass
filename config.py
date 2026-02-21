@@ -1,6 +1,7 @@
+PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
 PLACES_KEY = "no_key"
 TEST = True
-MOCK_DATA = {
+MOCK_PLACE_DATA = {
   "html_attributions": [],
   "results": [
     {
@@ -19,7 +20,6 @@ MOCK_DATA = {
       "icon": "https://maps.gstatic.com/mapfiles/place_api/icons/v1/png_71/restaurant-71.png",
       "name": "Example Restaurant",
       "opening_hours": {
-        "open_now": true
       },
       "photos": [
         {
