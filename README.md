@@ -11,13 +11,16 @@
 
 ## Running Program
 - Run `pip install mpremote`
-- Run `mpremote dev` to locate ESP32
+- Run `mpremote devs` to locate ESP32
 - Run `mpremote connect /dev/cu.usbserial-0001 repl` to connect to ESP32
     - Replace */dev/cu.usbserial-0001* with the appropriate port
-- Run a program as a three step process:
+- Run the script `./flash.sh /dev/cu.usbserial-0001`
+    - Be sure to change the port appropriately
+- Or, run a program as a three step process:
     1. Upload as `mpremote connect /dev/cu.usbserial-0001 fs cp main.py :main.py`
         - *main.py* is entry point for MicroPython
         - Replace */dev/cu.usbserial-0001* with the appropriate port
     2. Reset as `mpremote connect /dev/cu.usbserial-0001 reset`
     3. Watch as `mpremote connect /dev/cu.usbserial-0001 repl`
 - ctrl + \] or ctrl + x to exit mpremote shell
+- Hard remove the file on ESP3 with `mpremote connect /dev/cu.usbserial-0001 fs rm :main.py`
