@@ -1,11 +1,12 @@
 import requests
 import config
+import keys
 
 def get_bars(cur_location, radius):
     if config.TEST == True:
         return config.MOCK_PLACE_DATA
     params = {
-        "key": config.PLACES_KEY,
+        "key": keys.PLACES_KEY,
         "location": cur_location,  
         "radius": radius,
         "type": "bar",

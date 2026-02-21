@@ -1,5 +1,4 @@
 PLACES_URL = "https://maps.googleapis.com/maps/api/place/textsearch/json"
-PLACES_KEY = "no_key"
 TEST = True
 MOCK_PLACE_DATA = {
   "html_attributions": [],
