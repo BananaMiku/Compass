@@ -14,3 +14,4 @@ def main():
             last_scan = cur_location
             bars = barfindr.get_bars(cur_location, 10000)
         closest_bar = barfindr.find_closest_bar(bars, cur_location)
+        #TODO update dir given changes
