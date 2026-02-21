@@ -1,7 +1,8 @@
 import requests
 import config
-import keys
 import location_calculations as lc
+if not config.TEST:
+    import keys
 
 def get_bars(cur_location, radius):
     if config.TEST:
