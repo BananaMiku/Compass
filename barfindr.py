@@ -14,7 +14,7 @@ def get_bars(cur_location, radius):
         "X-Goog-FieldMask": "places.displayName,places.formattedAddress,places.location"
     }
     payload = {
-        "includedTypes": ["bar"],
+        "includedTypes": ["pub"],
         "maxResultCount": 20,
         "locationRestriction": {
             "circle": {
@@ -41,8 +41,6 @@ def find_closest_bar(bars, cur_location):
         if bar_dist <= dist:
             cur_closest = bar
             dist = bar_dist
-        print(cur_closest, bar)
-    print(dist)
     return cur_closest
         
 def extract_lat_lng(google_res):
@@ -51,7 +49,7 @@ def extract_lat_lng(google_res):
     return {'lat': google_res['location']['latitude'], 'lng': google_res['location']['longitude']}
 
 def test():
-    cur_location = {'lat': 42.2743676, 'lng': -72.6594507}
+    cur_location = {'lat': 42.38946364566387, 'lng': -72.52707235130748}
     bars = get_bars(cur_location, 16093.44)
     print(bars)
     print(find_closest_bar(bars, cur_location))
