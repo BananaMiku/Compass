@@ -91,6 +91,4 @@ def main_calibration():
         motor.go_to_angle_calibration(offset, cur_speed)
 
 
-
-
-main()
+main_calibration()
