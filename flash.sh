@@ -13,6 +13,9 @@ mpremote connect "$PORT" fs rm :local_orientation.py || true
 mpremote connect "$PORT" fs rm :local_calculations.py || true
 mpremote connect "$PORT" fs rm :barfindr.py || true
 mpremote connect "$PORT" fs rm keys.py || true
+mpremote connect "$PORT" fs rm wifi.py || true
+mpremote connect "$PORT" fs rm position_adjustment.py || true
+mpremote connect "$PORT" fs rm motor_test.py || true
 
 echo "==> Copying new files..."
 mpremote connect "$PORT" fs cp main.py :main.py
@@ -22,6 +25,9 @@ mpremote connect "$PORT" fs cp local_orientation.py :local_orientation.py
 mpremote connect "$PORT" fs cp location_calculations.py :location_calculations.py
 mpremote connect "$PORT" fs cp barfindr.py :barfindr.py
 mpremote connect "$PORT" fs cp keys.py :keys.py
+mpremote connect "$PORT" fs cp wifi.py :wifi.py
+mpremote connect "$PORT" fs cp position_adjustment.py :position_adjustment.py
+mpremote connect "$PORT" fs cp motor_test.py :motor_test.py
 
 # Ensure boot.py won't run surprise stuff
 cat > /tmp/boot.py <<'EOF'

@@ -59,14 +59,14 @@ class Locality:
         ]
         # yaw is 0 to 360
         yaw = self.imu.euler()[0]
-        bearing = (yaw + self.local_declination) % 360
+        heading = (yaw + self.local_declination) % 360
         
         # BNO055 calibrated at 0 degrees as North
         # +- 22.5 to center to North at 0
-        direction_idx = int(((bearing + 22.5) // 45) % 8)
+        direction_idx = int(((heading + 22.5) // 45) % 8)
         curr_dir = directions[direction_idx]
         
-        return curr_dir, bearing
+        return curr_dir, heading
 
     def gps_update(self):
         """Reads UART bytes and feeds them into MicropyGPS for processing.
@@ -84,10 +84,21 @@ class Locality:
         return bool(getattr(self.gps, "valid", False))
     
     def gps_get_position(self):
-        """Returns lat. and lon. of current location.
-        Ex. return vals: [42, 23.7427, 'N']   [72, 31.8539, 'W']
+        """Returns lat. and lon. of current location in decimal degrees.
+        self.gps.latitude returns list of [degree, minutes, direction]
         """
         if self.gps_has_fix():
-            return self.gps.latitude, self.gps.longitude
+            lat_raw = self.gps.latitude
+            lon_raw = self.gps.longitude
+
+            lat = lat_raw[0] + (lat_raw[1] / 60.0)
+            if lat_raw[2] == "S":
+                lat = -lat
+
+            lon = lon_raw[0] + (lon_raw[1] / 60.0)
+            if lon_raw[2] == "W":
+                lon = -lon
+
+            return lat, lon
         else:
             return None, None
