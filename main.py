@@ -48,7 +48,5 @@ def main():
         # Drive needle to offset angle using encoder feedback
         motor.go_to_angle(offset)
 
-        #TODO try removing
-        time.sleep_ms(50)
 
 main()
