@@ -79,6 +79,20 @@ class Motor():
         return error
 
 
+def test_hold_one_angle(): 
+    m = Motor()
+    while True:
+        m.go_to_angle(180)
+        time.sleep_ms(20)
+
+def test_max_ocilate():
+    m = Motor()
+    prev = 0
+    while True:
+        prev = 180 if prev == 0 else 0
+        m.go_to_angle(prev)
+        time.sleep(20)
+
 if __name__ == '__main__':
     m = Motor()
     # Sweep test: 0° → 90° → 180° → 90° → 0°
