@@ -2,7 +2,7 @@
 set -euo pipefail
 
 # Change this per device
-PORT="${1:-/dev/cu.usbserial-0001}"
+PORT="${1:-/dev/ttyUSB0}"
 
 echo "==> Using port: $PORT"
 echo "==> Removing old files..."

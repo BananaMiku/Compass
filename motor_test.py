@@ -41,8 +41,8 @@ class Motor():
         self.angle += (self._last_speed / 1023.0) * self.DEG_PER_SEC_AT_FULL * dt
         self.angle = self.angle % 360
         #sleep if drive time is too close to now 
-        if dt * 1000 <= MIN_WAIT_TIME_MS:
-            time.sleep_ms(MIN_WAIT_TIME_MS - dt)
+        if dt * 1000 <= self.MIN_WAIT_TIME_MS:
+            time.sleep_ms(int(self.MIN_WAIT_TIME_MS - dt))
         self._last_drive_time = now
 
         speed = max(-1023, min(1023, int(speed)))
@@ -81,27 +81,6 @@ class Motor():
             speed = -speed
         self._drive(speed)
         return error
-
-    def go_to_angle_calibration(self, target, speed, deadzone=10):
-        """Drive toward target angle. Call repeatedly in a loop.
-        Returns the current angular error.
-        """
-        error = target - self.angle
-        # Normalize to shortest path (-180 to 180)
-        error = ((error + 180) % 360) - 180
-
-        if abs(error) < deadzone:
-            self.stop()
-            return error
-
-        # Proportional speed: min 300 (enough to move), max 1023
-        speed = max(speed, min(speed, int(abs(error) * 0.01)))
-        if error < 0:
-            speed = -speed
-        self._drive(speed)
-        return error
-
-
 
 
 def test_hold_one_angle(): 
