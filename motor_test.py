@@ -14,6 +14,7 @@ class Motor():
         Adjust COUNTS_PER_REV for your gear ratio variant.
     """
     COUNTS_PER_REV = 234  # 11 PPR * 21.3:1 gear ratio
+    MIN_WAIT_TIME_MS = 20
 
     def __init__(self, cw_pin=25, ccw_pin=26,
                  enc_a_pin=32, enc_b_pin=33, pwm_freq=1000):
@@ -39,6 +40,9 @@ class Motor():
         dt = time.ticks_diff(now, self._last_drive_time) / 1000.0  # seconds
         self.angle += (self._last_speed / 1023.0) * self.DEG_PER_SEC_AT_FULL * dt
         self.angle = self.angle % 360
+        #sleep if drive time is too close to now 
+        if dt * 1000 <= MIN_WAIT_TIME_MS:
+            time.sleep_ms(MIN_WAIT_TIME_MS - dt)
         self._last_drive_time = now
 
         speed = max(-1023, min(1023, int(speed)))
@@ -83,7 +87,6 @@ def test_hold_one_angle():
     m = Motor()
     while True:
         m.go_to_angle(180)
-        time.sleep_ms(20)
 
 def test_max_ocilate():
     m = Motor()
@@ -91,7 +94,6 @@ def test_max_ocilate():
     while True:
         prev = 180 if prev == 0 else 0
         m.go_to_angle(prev)
-        time.sleep(20)
 
 if __name__ == '__main__':
     m = Motor()

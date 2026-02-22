@@ -25,7 +25,6 @@ def main():
 
         if len(cur_location) < 2:
             motor.stop()
-            time.sleep(0.1)
             continue
             #just continue moving the motor to the last acc cur location if we can 
         if last_scan is None or lc.get_distance(cur_location, last_scan) > RESCAN_DIST:
@@ -34,7 +33,6 @@ def main():
         closest_bar = barfindr.find_closest_bar(bars, cur_location)
         if closest_bar is None:
             motor.stop()
-            time.sleep(0.5)
             continue
         bar_coords = barfindr.extract_lat_lng(closest_bar)
 
