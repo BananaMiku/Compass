@@ -16,6 +16,7 @@
     - On MacOS, the port for ESP32 might look something like this: `/dev/cu.usbserial-0001`
 - To verify connection to ESP32, run `mpremote connect /dev/cu.usbserial-0001 exec "print('hello from esp32')"`
     - Replace */dev/cu.usbserial-0001* with the appropriate port
+- Create a *keys.py* with **PLACES_KEY** containing your Google API Key
 #### Dependecies
 - The program needs the following drivers, downloadable via:
     - BNO055 IMU: `mpremote mip install github:micropython-IMU/micropython-bno055`
@@ -38,3 +39,23 @@
 #### Exiting Program
 - ctrl + \] or ctrl + x to exit mpremote shell
 - Hard remove the file on ESP3 with `mpremote connect /dev/cu.usbserial-0001 fs rm :main.py`
+
+## Physical Wiring
+- On ESP32S 30P Breakout Board
+- Control voltage via jumper
+#### BNO055
+- SDA &rarr; (S, GPIO21)
+- SCL &rarr; (S, GPIO22)
+- VIN &rarr; (V, any) as ONLY 3.3V
+- GND &rarr; (G, any)
+#### Adafruit Ultimate GPS
+- TX &rarr; (S, GPIO16)
+- RX &rarr; (S, GPIO17)
+- VIN &rarr; (V, any) as 3.3V or 5V
+- GND &rarr; (G, any)
+#### Note
+- Indication of working hardware
+    - Sready red LED on ESP32 and its breakout board
+    - Steady green LED on BNO055
+    - Slow blinking red LED on Adafruit Ultimate GPS
+        - Fast blinking (~1 second interval) red LED means no signal
