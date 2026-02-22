@@ -10,7 +10,7 @@ mpremote connect "$PORT" fs rm :main.py || true
 mpremote connect "$PORT" fs rm :gps.py || true
 mpremote connect "$PORT" fs rm :config.py || true
 mpremote connect "$PORT" fs rm :local_orientation.py || true
-mpremote connect "$PORT" fs rm :local_calculations.py || true
+mpremote connect "$PORT" fs rm :location_calculations.py || true
 mpremote connect "$PORT" fs rm :barfindr.py || true
 mpremote connect "$PORT" fs rm keys.py || true
 mpremote connect "$PORT" fs rm wifi.py || true

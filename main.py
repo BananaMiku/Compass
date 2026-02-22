@@ -14,10 +14,12 @@ def main():
     motor = Motor(left_pin=25, right_pin=26)  # IMU uses pin (22, 21)
     last_scan = None
     bars = []
+    # while True:
+    #     print(local.imu_get_direction())
 
     while True:
         # Read GPS UART data
-        local.gps_update()
+        # local.gps_update()
         lat, lon = local.gps_get_position()
 
         if lat is None or lon is None:
@@ -26,7 +28,6 @@ def main():
             continue
 
         cur_location = {'lat': lat, 'lng': lon}
-
         if last_scan is None or lc.get_distance(cur_location, last_scan) > RESCAN_DIST:
             last_scan = cur_location
             bars = barfindr.get_bars(cur_location, 10000)
@@ -39,6 +40,7 @@ def main():
 
         # Get current heading from IMU
         _, heading = local.imu_get_direction()
+        print(heading)
 
         # Calculate angle offset to closest bar
         offset = pa.degree_offset(lat, lon, bar_coords['lat'], bar_coords['lng'], heading)
