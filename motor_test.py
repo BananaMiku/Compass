@@ -82,6 +82,27 @@ class Motor():
         self._drive(speed)
         return error
 
+    def go_to_angle_calibration(self, target, speed, deadzone=10):
+        """Drive toward target angle. Call repeatedly in a loop.
+        Returns the current angular error.
+        """
+        error = target - self.angle
+        # Normalize to shortest path (-180 to 180)
+        error = ((error + 180) % 360) - 180
+
+        if abs(error) < deadzone:
+            self.stop()
+            return error
+
+        # Proportional speed: min 300 (enough to move), max 1023
+        speed = max(speed, min(speed, int(abs(error) * 0.01)))
+        if error < 0:
+            speed = -speed
+        self._drive(speed)
+        return error
+
+
+
 
 def test_hold_one_angle(): 
     m = Motor()
