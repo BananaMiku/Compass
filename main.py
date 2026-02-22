@@ -21,3 +21,4 @@ def main():
         # gets current orientation in terms of direction and degree
         curr_dir, bearing = lo.get_direction()
 
+main()

@@ -2,20 +2,26 @@ from machine import Pin, SoftI2C
 from bno055 import BNO055
 import time
 
-# BNO055 boot time
-time.sleep_ms(600)
+# Try initialization
+try: 
+    # BNO055 boot time
+    time.sleep_ms(600)
 
-i2c = SoftI2C(
-    scl=Pin(22),
-    sda=Pin(21),
-    freq=100000,
-    timeout=100000 #BNO055 clock stretching
-)
+    i2c = SoftI2C(
+        scl=Pin(22),
+        sda=Pin(21),
+        freq=100000,
+        timeout=100000 #BNO055 clock stretching
+    )
 
-imu = BNO055(i2c, address=0x28)
-# BNO055 measures relative to magnetic north
-# Define local declination for higer accuracy
-local_declination = -14.0 
+    imu = BNO055(i2c, address=0x28)
+    # BNO055 measures relative to magnetic north
+    # Define local declination for higer accuracy
+    local_declination = -14.0 
+except:
+    # print("No BNO055 Chip Detected, Skipping IMU...")
+    pass
+
 
 def get_direction():
     """Returns direction in text and number.
