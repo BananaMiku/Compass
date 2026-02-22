@@ -12,6 +12,7 @@ def main():
     local = Locality()
     motor = Motor()  # L298N: ENA=25, IN1=26, IN2=27 | Encoder: A=32, B=33
     last_scan = None
+    cur_location = {}
     bars = []
 
     while True:
@@ -19,12 +20,14 @@ def main():
         # local.gps_update()
         lat, lon = local.gps_get_position()
 
-        if lat is None or lon is None:
+        if lat and lon:
+            cur_location['lat'], cur_location['lng'] = lat, lon
+
+        if len(cur_location) < 2:
             motor.stop()
             time.sleep(0.1)
             continue
-
-        cur_location = {'lat': lat, 'lng': lon}
+            #just continue moving the motor to the last acc cur location if we can 
         if last_scan is None or lc.get_distance(cur_location, last_scan) > RESCAN_DIST:
             last_scan = cur_location
             bars = barfindr.get_bars(cur_location, 10000)
@@ -45,6 +48,7 @@ def main():
         # Drive needle to offset angle using encoder feedback
         motor.go_to_angle(offset)
 
+        #TODO try removing
         time.sleep_ms(50)
 
 main()
