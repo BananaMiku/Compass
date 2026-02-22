@@ -6,16 +6,13 @@ from motor_test import Motor
 import position_adjustment as pa
 import time
 
-DEADZONE = 10  # degrees tolerance before stopping motor
 RESCAN_DIST = 100  # meters before re-fetching bars
 
 def main():
     local = Locality()
-    motor = Motor(left_pin=25, right_pin=26)  # IMU uses pin (22, 21)
+    motor = Motor()  # L298N: ENA=25, IN1=26, IN2=27 | Encoder: A=32, B=33
     last_scan = None
     bars = []
-    # while True:
-    #     print(local.imu_get_direction())
 
     while True:
         # Read GPS UART data
@@ -40,19 +37,14 @@ def main():
 
         # Get current heading from IMU
         _, heading = local.imu_get_direction()
-        print(heading)
 
-        # Calculate angle offset to closest bar
+        # Calculate angle offset to closest bar (-180 to 180)
         offset = pa.degree_offset(lat, lon, bar_coords['lat'], bar_coords['lng'], heading)
+        print(f"offset: {offset}")
 
-        # Drive motor toward target
-        if abs(offset) < DEADZONE:
-            motor.stop()
-        elif offset > 0:
-            motor.rotate_clockwise()
-        else:
-            motor.rotate_counterclockwise()
+        # Drive needle to offset angle using encoder feedback
+        motor.go_to_angle(offset)
 
-        time.sleep(0.1)
+        time.sleep_ms(50)
 
 main()
