@@ -52,7 +52,7 @@ def main_calibration():
     last_scan = None
     cur_location = {}
     cur_speed = 300
-    last_update = time.now()
+    last_update = time.ticks_ms()
     bars = []
 
     while True:
@@ -60,7 +60,7 @@ def main_calibration():
         # local.gps_update()
         if(time.ticks_diff(now, last_update) / 1000.0 > 10):
             cur_speed += 10
-            last_update = time.now()
+            last_update = time.ticks_ms()
                 
         lat, lon = local.gps_get_position()
 
